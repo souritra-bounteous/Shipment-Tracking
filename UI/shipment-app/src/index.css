@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* CUSTOM STYLES */
+.input {
+  @apply w-full p-2 border rounded mb-2;
+}
+
+.btn-primary {
+  @apply w-full bg-blue-600 text-white p-3 rounded;
+}
