@@ -8,12 +8,17 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class UserResponse {
+public class DriverProfileResponse {
     private UUID id;
+    private UUID userId;
     private String name;
     private String email;
     private String phone;
-    private String role;
-    private Boolean active;
+    private String licenseNumber;
+    private String vehicleNumber;
+    private String vehicleType;
+    private Double currentLatitude;
+    private Double currentLongitude;
+    private Boolean available;
     private LocalDateTime createdAt;
 }

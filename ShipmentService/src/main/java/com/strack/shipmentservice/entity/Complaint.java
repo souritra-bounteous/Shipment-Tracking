@@ -1,4 +1,4 @@
-package com.strack.authservice.entity;
+package com.strack.shipmentservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,37 +7,37 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "complaints")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Complaint {
 
     @Id
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "shipment_id", nullable = false)
+    private Shipment shipment;
+
+    @Column(name = "customer_id", nullable = false)
+    private UUID customerId;
+
     @Column(nullable = false)
-    private String name;
+    private String subject;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(unique = true)
-    private String phone;
-
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private UserRole role;
+    private ComplaintStatus status;
 
-    @Builder.Default
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+    @Column(columnDefinition = "TEXT")
+    private String resolution;
 
     @Builder.Default
     @Column(name = "created_at", nullable = false, updatable = false)

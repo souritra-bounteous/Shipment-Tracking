@@ -68,6 +68,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 
@@ -120,8 +127,8 @@
                         </configuration>
                     </execution>
                 </executions><configuration>
-                <source>5</source>
-                <target>5</target>
+                <source>17</source>
+                <target>17</target>
             </configuration>
             </plugin>
         </plugins>

@@ -20,6 +20,9 @@ public class ShipmentCurrentLocation {
 
     private Double latitude;
     private Double longitude;
+    private String location;
 
+    @Builder.Default
+    @Column(name = "last_updated", nullable = false)
     private LocalDateTime lastUpdated = LocalDateTime.now();
 }
