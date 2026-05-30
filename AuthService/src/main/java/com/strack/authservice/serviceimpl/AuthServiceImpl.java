@@ -4,6 +4,7 @@ import com.strack.authservice.dto.LoginRequest;
 import com.strack.authservice.dto.RegisterRequest;
 import com.strack.authservice.entity.User;
 import com.strack.authservice.entity.RefreshToken;
+import com.strack.authservice.entity.UserRole;
 import com.strack.authservice.repository.RefreshTokenRepository;
 import com.strack.authservice.repository.UserRepository;
 import com.strack.authservice.service.AuthService;
@@ -35,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
-                .role("CUSTOMER")
+                .role(resolveRole(request.getRole()))
                 .build();
 
         userRepository.save(user);
@@ -90,5 +91,12 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(newAccessToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    private UserRole resolveRole(String requestedRole) {
+        if (requestedRole == null || requestedRole.isBlank()) {
+            return UserRole.CUSTOMER;
+        }
+        return UserRole.valueOf(requestedRole.toUpperCase());
     }
 }

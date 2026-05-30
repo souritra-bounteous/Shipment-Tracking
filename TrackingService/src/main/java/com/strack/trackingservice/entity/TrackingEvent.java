@@ -22,8 +22,9 @@ public class TrackingEvent {
     @Column(nullable = false)
     private UUID shipmentId;
 
-    @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private ShipmentStatus status;
 
     private String location;
 
@@ -34,5 +35,11 @@ public class TrackingEvent {
 
     private UUID updatedBy;
 
+    @Builder.Default
+    @Column(name = "event_time", nullable = false)
     private LocalDateTime eventTime = LocalDateTime.now();
+
+    @Builder.Default
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

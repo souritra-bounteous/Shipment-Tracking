@@ -1,4 +1,4 @@
-package com.strack.shipmentservice.entity;
+package com.strack.trackingservice.entity;
 
 public enum ShipmentStatus {
     BOOKED,
