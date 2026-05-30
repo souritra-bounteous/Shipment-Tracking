@@ -2,15 +2,18 @@ import Card from "../../components/ui/Card";
 import DataTable from "../../components/ui/DataTable";
 import { ErrorState, LoadingState, Page, PageHeader } from "../../components/ui/Page";
 import StatusBadge from "../../components/ui/StatusBadge";
-import { useAllShipments } from "../../hooks/useShipments";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useDriverShipments } from "../../hooks/useShipments";
 import type { Shipment } from "../../types";
 
-export default function ShipmentsTable() {
-  const shipments = useAllShipments();
+export default function ShipmentDetails() {
+  const { driver } = useCurrentUser();
+  const shipments = useDriverShipments(driver?.id);
 
   return (
     <Page>
-      <PageHeader title="Shipment Management" description="Manage all customer shipments and monitor current state." />
+      <PageHeader title="Shipment Details" description="Assigned shipment details and navigation-ready route data." />
+
       <Card>
         {shipments.isLoading ? (
           <LoadingState />
@@ -22,11 +25,11 @@ export default function ShipmentsTable() {
             keyExtractor={(row) => row.id}
             columns={[
               { header: "Tracking ID", accessor: (row) => <span className="font-bold">{row.trackingId}</span> },
-              { header: "Route", accessor: (row) => `${row.origin ?? "Origin"} → ${row.destination ?? "Destination"}` },
               { header: "Customer", accessor: "customerId" },
-              { header: "Driver", accessor: (row) => row.assignedDriverId ?? "Unassigned" },
+              { header: "Pickup", accessor: (row) => row.origin ?? "—" },
+              { header: "Delivery", accessor: (row) => row.destination ?? "—" },
+              { header: "Weight", accessor: (row) => `${row.weight ?? 0} kg` },
               { header: "Status", accessor: (row) => <StatusBadge status={row.status} /> },
-              { header: "Date", accessor: (row) => (row.createdAt ? new Date(row.createdAt).toLocaleDateString() : "—") },
             ]}
           />
         )}
